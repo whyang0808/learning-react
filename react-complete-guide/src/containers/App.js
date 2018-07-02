@@ -9,6 +9,16 @@ class App extends PureComponent {
   constructor(props) {
     super(props);
     console.log('[App.js] Inside Constructor', props);
+    this.state = {
+      persons: [
+        { id: '1', name: 'Max', age: '28' },
+        { id: '2', name: 'Manu', age: '29' },
+        { id: '3', name: 'Stephanie', age: '26' }
+      ],
+      otherState: 'some other value',
+      showPersons: false,
+      toggleClicked: 0
+    }
   }
 
   componentWillMount() {
@@ -31,16 +41,6 @@ class App extends PureComponent {
 
   componentDidUpdate() {
       console.log('[UPDATE App.js] Inside componentDidUpdate');
-  }
-
-  state = {
-    persons: [
-      { id: '1', name: 'Max', age: '28' },
-      { id: '2', name: 'Manu', age: '29' },
-      { id: '3', name: 'Stephanie', age: '26' }
-    ],
-    otherState: 'some other value',
-    showPersons: false
   }
 
   nameChangeHandler = (event, id) => {
@@ -75,8 +75,11 @@ class App extends PureComponent {
 
   togglePersonHandler = () => {
     const doesShow = this.state.showPersons;
-    this.setState({
-      showPersons: !doesShow
+    this.setState((prevState, props) => {
+      return {
+        showPersons: !doesShow,
+        toggleClicked: prevState.toggleClicked + 1
+      }
     })
   }
 
